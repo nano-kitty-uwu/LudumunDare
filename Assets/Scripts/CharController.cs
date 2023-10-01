@@ -10,14 +10,10 @@ public class CharController : MonoBehaviour
 {
 	public float atack1Damage = 1;
 	public Transform movePoint;
-	public Collider2D attackCollider;
-	public Collider2D moveCheckCollider;
 	public int titlesToMove;
 	public bool canItMove;
 	public bool haveKey;
-	private enemyScript target =null;
-	private bool targetExists;
-	public LayerMask stopsMove;
+	private enemyScript target = null;
 	public GameObject attackButton;
 	public GameObject moveButton;
 	public GameObject passMovement;
@@ -57,18 +53,14 @@ public class CharController : MonoBehaviour
 			canItMove = false;
 			target=collision.gameObject.GetComponent<enemyScript>();
 			target.EnemyDeath.AddListener(OnEnemyTargetDeath);
-			targetExists = true;
 			Debug.Log("Collison with enemy");
 		}
 		if (collision.gameObject.tag == "Key")
 		{
 			haveKey = true;
 			throwKey.SetActive(true);
+			collision.gameObject.transform.position = gameObject.transform.position +new Vector3(0, 3);
 		}
-	}
-	private void OnTriggerExit2D(Collider2D collision)
-	{
-		
 	}
 	public void Attack()
 	{
