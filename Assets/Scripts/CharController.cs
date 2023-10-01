@@ -18,8 +18,9 @@ public class CharController : MonoBehaviour
 	public GameObject throwKey;
 
 	public UnityEvent CharacterMoved;
-	
-	void Start()
+	public UnityEvent CharacterPassed;
+
+    void Start()
 	{
 		throwKey.SetActive(false);
 		attackButton.SetActive(false);
@@ -49,13 +50,15 @@ public class CharController : MonoBehaviour
 		}
 		if(collision.gameObject.tag == "Enemy")
 		{
+			target=collision.gameObject.GetComponent<enemyScript>();
+			target.canItMove = false;
 			attackButton.SetActive(true);
 			moveButton.SetActive(false);
 			canItMove = false;
-			target=collision.gameObject.GetComponent<enemyScript>();
 			target.EnemyDeath.AddListener(OnEnemyTargetDeath);
 			targetExists = true;
 			Debug.Log("Collison with enemy");
+
 		}
 		if (collision.gameObject.tag == "Key")
 		{
@@ -84,4 +87,10 @@ public class CharController : MonoBehaviour
 		target = null;
 		canItMove = true;
 	}
+
+	public void PassMove()
+	{
+		CharacterMoved?.Invoke();
+
+    }
 }
