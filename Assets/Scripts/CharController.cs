@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class CharController : MonoBehaviour
 {
@@ -9,22 +10,22 @@ public class CharController : MonoBehaviour
 	public bool haveKey;
 
 	private enemyScript target =null;
-	private bool targetExists;
-	public LayerMask stopsMove;
 
 	//=============
 
 	public GameObject attackButton;
 	public GameObject moveButton;
 	public GameObject passMovement;
-	public GameObject throwKey;
-
+	public GameObject throwKeyBtn;
+	public Transform upRow;
+	public Transform downRow;
+	public GameObject keyOBJ;
 	public UnityEvent CharacterMoved;
 	public UnityEvent CharacterPassed;
 
     void Start()
 	{
-		throwKey.SetActive(false);
+		throwKeyBtn.SetActive(false);
 		attackButton.SetActive(false);
 		canItMove = true;
 	}
@@ -63,15 +64,19 @@ public class CharController : MonoBehaviour
 		}
 		if (collision.gameObject.tag == "Key")
 		{
+			keyOBJ = collision.gameObject;
+			collision.gameObject.transform.parent=gameObject.transform;
 			haveKey = true;
-			throwKey.SetActive(true);
-			collision.gameObject.transform.position = gameObject.transform.position +new Vector3(0, 3);
+			throwKeyBtn.SetActive(true);
+			collision.gameObject.transform.position = gameObject.transform.position + new Vector3(0, 0.5f) ;
 		}
 	}
-	public void Attack()
+	
+	public void ThrowKey()
 	{
-		//if (targetExists) target.takeDamage(atack1Damage);
-		//else Debug.Log("No targert");
+		keyOBJ.transform.position = downRow.position;
+		keyOBJ.transform.parent = null;
+		throwKeyBtn.SetActive(false);
 	}
 	public void Update()
 	{
