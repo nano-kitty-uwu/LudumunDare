@@ -16,7 +16,7 @@ public class Line_ : MonoBehaviour
 
     private void Start()
     {
-        //hero.CharacterMoved.AddListener(OnHeroMoved);
+        hero.CharacterMoved.AddListener(OnHeroMoved);
     }
 
     private void OnHeroMoved()
@@ -24,6 +24,16 @@ public class Line_ : MonoBehaviour
         active = false;
 
         //Move Enemies;
+        StartCoroutine(WaitBeforeEnemyMove());
     }
 
+    private IEnumerator WaitBeforeEnemyMove()
+    {
+        yield return new WaitForSeconds(.2f);
+
+        foreach (var enemy in enemies)
+        {
+            enemy.Move();
+        }
+    }
 }
