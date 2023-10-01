@@ -8,9 +8,9 @@ public class enemyScript : MonoBehaviour
     public float hp;
 
     public UnityEvent EnemyDeath;
-	public void takeDamage(float amount)
+	public void takeDamage()
     {
-        hp -= amount;
+        hp -= 1;
         if (hp <= 0)
         {
             Die();

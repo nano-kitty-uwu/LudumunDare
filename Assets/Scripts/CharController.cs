@@ -1,23 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class CharController : MonoBehaviour
 {
-	public float atack1Damage = 1;
 	public Transform movePoint;
 	public int titlesToMove;
 	public bool canItMove;
 	public bool haveKey;
-	private enemyScript target = null;
+
+	private enemyScript target =null;
+	private bool targetExists;
+	public LayerMask stopsMove;
+
+	//=============
+
 	public GameObject attackButton;
 	public GameObject moveButton;
 	public GameObject passMovement;
 	public GameObject throwKey;
+
+	public UnityEvent CharacterMoved;
 	
 	void Start()
 	{
@@ -31,10 +33,11 @@ public class CharController : MonoBehaviour
 		{
 			for (int i = 1; i <= titlesToMove; i++)
 			{
+
 				transform.position = movePoint.position;
 			}
-		
-		}
+			CharacterMoved?.Invoke();
+        }
 		
 	}
 	private void OnTriggerEnter2D(Collider2D collision)
